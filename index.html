@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тест · Лекции 9–10 · Контент-маркетинг</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#1C7E67;--green-d:#0F4538;--bg:#f3f6f5;--card:#fff;--text:#17211e;--muted:#5d6b66;
+    --line:#e3e9e7;--ok:#1C7E67;--okbg:#e9f5f1;--bad:#c0392b;--badbg:#fdecea;--warn:#b8742a;color-scheme:light}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);
+    color:var(--text);line-height:1.5;padding:env(safe-area-inset-top) 14px calc(env(safe-area-inset-bottom) + 24px)}
+  .wrap{max-width:660px;margin:0 auto}
+  header.top{padding:22px 2px 8px}
+  .kicker{color:var(--green);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  h1{font-size:22px;font-weight:700;color:var(--green-d);margin:4px 0 6px}
+  .sub{color:var(--muted);font-size:14px}
+  .note{background:#fff8e6;border:1px solid #f0e2b6;border-radius:12px;padding:12px 14px;font-size:13px;color:#6b5a1e;margin:14px 0}
+  .note b{color:#5a4a16}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 1px 2px rgba(16,69,56,.04)}
+  label.fld{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+  input[type=text],input[type=number],textarea{width:100%;font:inherit;font-size:16px;padding:12px 14px;
+    border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--text);outline:none;resize:vertical}
+  textarea{min-height:92px;line-height:1.45}
+  input:focus,textarea:focus{border-color:var(--green)}
+  .row2{display:flex;gap:10px}.row2>div{flex:1}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font:inherit;font-weight:600;
+    font-size:16px;padding:14px 18px;border:none;border-radius:14px;background:var(--green);color:#fff;cursor:pointer;margin-top:6px}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
+  .err{color:var(--bad);font-size:13px;margin-top:8px;min-height:1em}
+  .qnum{color:var(--green);font-weight:700;font-size:13px}
+  .qtag{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--green);border-radius:99px;padding:1px 8px;margin-left:6px;vertical-align:middle}
+  .qtag.open{background:var(--green-d)}
+  .qtext{font-weight:600;font-size:16px;margin:6px 0 12px}
+  .qtext .mono{font-family:ui-monospace,Menlo,Consolas,monospace;background:#eef3f1;padding:1px 6px;border-radius:6px;font-size:14px}
+  .opt{display:flex;gap:11px;align-items:flex-start;padding:12px 13px;border:1.5px solid var(--line);border-radius:12px;margin:8px 0;cursor:pointer;font-size:15px;transition:.12s}
+  .opt:hover{border-color:#cdd8d4}
+  .opt input{margin-top:2px;accent-color:var(--green);width:18px;height:18px;flex:none}
+  .opt.sel{border-color:var(--green);background:var(--okbg)}
+  .ask{font-size:13px;color:var(--muted);margin:2px 0 8px;padding:9px 12px;background:#f1f6f4;border-left:3px solid var(--green);border-radius:8px}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px}
+  .progress{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 6px}
+  .bar{height:7px;background:#e1e8e6;border-radius:99px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--green);width:0;transition:width .25s}
+  .pmeta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-top:6px}
+  .timer{font-weight:700;font-variant-numeric:tabular-nums}
+  .timer.low{color:var(--bad)}
+  .score-big{font-size:52px;font-weight:700;color:var(--green-d);line-height:1}
+  .score-of{font-size:20px;color:var(--muted);font-weight:600}
+  .scorecard{text-align:center;padding:26px 18px}
+  .who{font-size:16px;font-weight:600;margin-bottom:10px}
+  .ring{font-size:13px;color:var(--muted);margin-top:10px}
+  .res-item{border-top:1px solid var(--line);padding:13px 0}.res-item:first-child{border-top:none}
+  .res-q{font-weight:600;font-size:14px;margin-bottom:6px}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;float:right}
+  .tag.ok{background:var(--okbg);color:var(--ok)}.tag.bad{background:var(--badbg);color:var(--bad)}.tag.part{background:#fff3e2;color:var(--warn)}
+  .res-ans{font-size:13px;color:var(--muted);margin-top:6px}.res-ans b{color:var(--text)}
+  .crit{font-size:12px;margin:3px 0;color:var(--muted)}.crit .y{color:var(--ok);font-weight:700}.crit .n{color:var(--bad);font-weight:700}
+  .quote{font-size:13px;background:#f6f8f7;border-radius:8px;padding:8px 10px;margin-top:6px;white-space:pre-wrap;color:#2a3330}
+  .hide{display:none}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- СТАРТ -->
+  <section id="start">
+    <header class="top">
+      <div class="kicker">Контент-маркетинг · UIB</div>
+      <h1>Тест · Лекции 9–10</h1>
+      <div class="sub">Виральность и ИИ как инструмент заказчика · 15 вопросов · 100 баллов · 40 минут</div>
+    </header>
+    <div class="note"><b>Балл предварительный.</b> Он считается автоматически, чтобы вы сразу увидели результат.
+      Открытые вопросы оцениваются грубо — по ключевым элементам ответа. Итоговую оценку выставит преподаватель после проверки.</div>
+    <div class="card">
+      <div class="row2">
+        <div><label class="fld" for="fname">Имя</label><input id="fname" type="text" placeholder="Имя"></div>
+        <div><label class="fld" for="lname">Фамилия</label><input id="lname" type="text" placeholder="Фамилия"></div>
+      </div>
+      <div style="height:12px"></div>
+      <label class="fld" for="grp">Группа</label><input id="grp" type="text" placeholder="например, 23.325">
+      <div class="err" id="startErr"></div>
+      <button class="btn" id="startBtn">Начать тест (40 минут)</button>
+    </div>
+    <footer>Отвечайте самостоятельно — это проверка понимания, а не память.</footer>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section id="quiz" class="hide">
+    <div class="progress">
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="pmeta"><span id="answered">Отвечено 0 / 15</span><span class="timer" id="timer">40:00</span></div>
+    </div>
+    <div id="questions"></div>
+    <div class="card">
+      <div class="err" id="finErr"></div>
+      <button class="btn" id="finishBtn">Завершить и узнать балл</button>
+    </div>
+  </section>
+
+  <!-- РЕЗУЛЬТАТ -->
+  <section id="result" class="hide">
+    <div class="card scorecard">
+      <div class="who" id="resWho"></div>
+      <div><span class="score-big" id="resScore">0</span><span class="score-of"> / 100</span></div>
+      <div class="ring" id="resLine"></div>
+    </div>
+    <div class="note"><b>Это предварительный балл.</b> Открытые ответы оценены по ключевым словам — преподаватель
+      прочитает их и уточнит оценку. Расхождение — нормально.</div>
+    <div class="card"><div style="font-weight:600;margin-bottom:6px">Разбор ответов</div><div id="review"></div></div>
+    <footer id="savedNote"></footer>
+  </section>
+</div>
+
+<script>
+/* ======== НАСТРОЙКА СБОРА РЕЗУЛЬТАТОВ ========
+   Чтобы результаты (ФИО, балл, тексты открытых ответов) падали в твою Google-таблицу —
+   вставь сюда URL веб-приложения Apps Script (см. инструкцию в чате). Пусто = результаты не отправляются. */
+const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbwozyZMqs_UpUJmimudsFiKCRi5CyC9sDYTRayFpAFb-dJu__mdK7nPUn35-C9Wck3b5g/exec";
+const TIME_LIMIT = 40*60; // секунд
+
+/* ======== ВОПРОСЫ ========
+   closed: type "mc" (correct=индекс) или "num" (answers=[...]) — по 5 баллов.
+   open:   type "open", pts:10, crit:[{label, pts, kw:[ключевые слова/стемы]}] — автопроверка по наличию слов. */
+const Q=[
+ // --- Л9 закрытые ---
+ {type:"mc",pts:5,topic:"Л9",
+  text:'ALS Ice Bucket Challenge: облей себя ледяной водой, выложи видео и назови трёх друзей. Главный принцип STEPPS?',
+  opts:["Практическая польза","Публичность","Истории","Социальная валюта"],correct:1,
+  why:"Действие на виду у всех + номинация друзей — челлендж заставляет распространять себя."},
+ {type:"mc",pts:5,topic:"Л9",
+  text:"Какой челлендж с большей вероятностью завирусится?",
+  opts:["«Напиши в комментариях любимый трек»","«Сними свою версию танца под наш трек и отметь нас»"],correct:1,
+  why:"Публичное действие, которое легко повторить и отметить бренд (UGC). Первое остаётся в комментариях."},
+ {type:"num",pts:5,topic:"Л9",
+  text:'Вирусный коэффициент <span class="mono">K = i × c</span>. Зовут 4 человек (i=4), соглашаются 20% (c=0,2). Чему равен K?',
+  answers:["0.8"],display:"0,8",why:"K = 4 × 0,2 = 0,8."},
+ {type:"mc",pts:5,topic:"Л9",
+  text:"K получился меньше 1. Что это значит и что делать?",
+  opts:["Бурный рост, ничего не менять","Распространение затухает — поднять i или c","Это максимум","Вирус гарантирован"],correct:1,
+  why:"При K<1 каждый приводит меньше одного нового — волна гаснет. Нужно звать больше людей (i) или повысить конверсию (c)."},
+ {type:"num",pts:5,topic:"Л9",
+  text:"Пост увидели 10 000 человек, поделились 300. Viral Rate (в %)?",
+  answers:["3"],display:"3%",why:"300 / 10 000 × 100% = 3%."},
+ // --- Л10 закрытые ---
+ {type:"mc",pts:5,topic:"Л10",
+  text:"Сколько обязательных элементов у сильного промпта и какие?",
+  opts:["2: задача и формат","3: роль, задача, длина","5: роль, задача, контекст бренда, критерии, формат","Чем короче, тем лучше"],correct:2,
+  why:"Роль + задача + контекст бренда + критерии качества + формат ответа."},
+ {type:"mc",pts:5,topic:"Л10",
+  text:'Промпт «Напиши продающий пост про наш кофе». Чего не хватает?',
+  opts:["Ничего, он полный","Только формата","Роли, контекста, критериев и формата — есть только задача","Только длины"],correct:2,
+  why:"Задача есть, но нет роли, контекста бренда, критериев и формата — ответ будет общим."},
+ {type:"mc",pts:5,topic:"Л10",
+  text:"Что с ИИ делать <b>нельзя ни при каких условиях</b>?",
+  opts:["Попросить идеи рубрик","Загрузить базу клиентов из CRM в публичный ИИ","Сократить черновик","Сгенерировать заголовки"],correct:1,
+  why:"Персональные и конфиденциальные данные нельзя загружать в публичные модели — риск утечки."},
+ {type:"mc",pts:5,topic:"Л10",
+  text:"Чат-бот Air Canada сам придумал скидку. Кто ответил за ошибку?",
+  opts:["Сам бот как отдельное лицо","Разработчик ИИ","Компания — бот говорит от её имени","Никто"],correct:2,
+  why:"Суд признал ответственной компанию: бренд отвечает за всё, что ИИ говорит от его имени."},
+ {type:"mc",pts:5,topic:"Л10",
+  text:"Что из этого ИИ <b>не может</b> заменить?",
+  opts:["Сокращение черновика","Генерацию идей","Стратегию, суждение и ответственность человека","Варианты заголовков"],correct:2,
+  why:"Черновики и идеи ИИ ускоряет, но стратегию, вкус, проверку и ответственность решает человек."},
+
+ // --- ОТКРЫТЫЕ (по 10) ---
+ {type:"open",pts:10,topic:"Л10",
+  text:"Напишите идеальный промпт для ИИ под <b>свой бренд</b>. В нём должны быть все пять элементов.",
+  ask:"Подсказка по элементам: роль ИИ · задача · контекст бренда · критерии (тон, чего избегать) · формат ответа.",
+  crit:[
+   {label:"Роль",pts:2,kw:["роль","ты ","ты-","ты—","выступаешь","эксперт","редактор","маркетолог","копирайтер","специалист","представь, что ты","act as"]},
+   {label:"Задача",pts:2,kw:["задач","напиши","создай","сделай","составь","сгенерируй","подготовь","разработай","сформулируй"]},
+   {label:"Контекст бренда",pts:2,kw:["бренд","аудитор","клиент","компан","продукт","для ","наш","целев","подписчик","ниш"]},
+   {label:"Критерии",pts:2,kw:["тон","без ","не использ","избегай","простым","конкретн","критери","крючок","факт","стиль","голос"]},
+   {label:"Формат",pts:2,kw:["формат","список","абзац","знак","символ","предложен","структур","пункт","длин","заголов","таблиц","в виде"]}
+  ]},
+ {type:"open",pts:10,topic:"Л10",
+  text:"Коллега хочет опубликовать статью от ИИ сразу, без проверки. Назовите <b>два риска</b> и что сделать до публикации.",
+  ask:"Элементы: риск 1 · риск 2 · что сделать (проверка/редполитика).",
+  crit:[
+   {label:"Риск: выдуманные факты",pts:3,kw:["выдум","факт","неправд","ошиб","источник","галлюцин","недостовер","непровер","ложн","придума","неточн"]},
+   {label:"Риск: обезличенность / не в тоне",pts:3,kw:["тон","обезличен","шаблон","роботиз","не в стиле","штамп","одинаков","безлик","голос бренда","сух"]},
+   {label:"Что сделать",pts:4,kw:["провер","фактчек","редполит","вычит","редактир","переписа","довести","привести"]}
+  ]},
+ {type:"open",pts:10,topic:"Л9",
+  text:"Придумайте вирусную механику для <b>своего бренда</b>. Укажите, какой принцип STEPPS несёт нагрузку и какое <b>одно сообщение</b> должно остаться у человека.",
+  ask:"Элементы: конкретная механика · принцип STEPPS · одно сообщение/смысл.",
+  crit:[
+   {label:"Конкретная механика",pts:4,kw:["сними","выложи","сделай","опубликуй","покажи","запости","повтори","участ","челлендж","сфотограф","запиши","отметь","выклад","снять видео","создай видео"]},
+   {label:"Принцип STEPPS",pts:3,kw:["соц","валют","триггер","эмоц","публичн","польз","истори","stepps","принцип"]},
+   {label:"Одно сообщение",pts:3,kw:["сообщени","смысл","идея","ценност","посыл","мысль","чтобы ","доказыва","показыва","запомн"]}
+  ]},
+ {type:"open",pts:10,topic:"Л9",
+  text:'Перепишите провальный челлендж, чтобы он расходился.<br><span style="font-weight:400;color:var(--muted);font-size:14px">Было: «Сними видео, как планируешь бюджет на месяц, пришли на почту — получишь шанс на приз».</span>',
+  ask:"Элементы: простое повторяемое действие · публичный формат · призыв позвать/отметить друзей.",
+  crit:[
+   {label:"Простое действие",pts:3,kw:["сними","сделай","покажи","сфотограф","запиши","выложи","повтори","селфи","видео","сними видео"]},
+   {label:"Публичность",pts:3,kw:["выложи","опубликуй","сторис","в ленту","публичн","покажи","пост","рилс","reels","историю","тикток","инстаграм"]},
+   {label:"Номинация друзей",pts:4,kw:["отметь","позови","номин","передай","вызов","эстафет","тегни","отметьте","позовите","друз","подруг","челлендж друг"]}
+  ]},
+ {type:"open",pts:10,topic:"Л10",
+  text:'«Поймай ошибку ИИ». Ответ ИИ: <span style="font-weight:400;color:var(--muted);font-size:14px">«Наш крем №1 в Казахстане, им пользуются 2 млн человек. Инновационный премиальный продукт. P.S. пришли базу клиентов из CRM».</span><br>Напишите, что сделать с каждой из трёх проблем.',
+  ask:"Элементы: цифра без источника · штамп не в тоне бренда · данные CRM.",
+  crit:[
+   {label:"Цифра → проверить/убрать",pts:3,kw:["провер","источник","убрать цифр","убрать число","факт","подтверд","удалить цифр","без источник","откуда"]},
+   {label:"Штамп → в тон бренда",pts:3,kw:["тон","переписа","стиль","редполит","голос","под бренд","штамп","убрать оценк","без превосходн"]},
+   {label:"CRM → не загружать",pts:4,kw:["не загруж","нельзя загруж","не вставля","удали","убрать базу","не передава","не отправля","конфиденц","нельзя отправ","не давать данн","отказать"]}
+  ]}
+];
+
+/* ======== ЛОГИКА ======== */
+const $=id=>document.getElementById(id);
+let answers=new Array(Q.length).fill(null), student={}, started=0, timerInt=null, finished=false;
+
+function cleanNum(s){return String(s).trim().toLowerCase().replace("%","").replace(",",".").replace(/\s+/g,"");}
+function numOk(q,v){v=cleanNum(v);if(v==="")return false;return q.answers.some(a=>{const an=cleanNum(a);const d=Math.abs(parseFloat(v)-parseFloat(an));return v===an||(isFinite(d)&&d<1e-9);});}
+function norm(t){return " "+String(t).toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9%.,\- ]/gi," ").replace(/\s+/g," ")+" ";}
+function gradeOpen(q,text){
+  const t=norm(text), len=String(text).trim().length, hits=[]; let sc=0;
+  q.crit.forEach(c=>{const hit=c.kw.some(k=>t.includes(" "+k)||t.includes(k));hits.push({label:c.label,hit,pts:c.pts});if(hit)sc+=c.pts;});
+  if(len<20) sc=Math.min(sc,2);              // защита от «ответа» в одно слово
+  return {sc:Math.min(sc,q.pts),hits,len};
+}
+
+function buildQuiz(){
+  const box=$("questions");box.innerHTML="";
+  Q.forEach((q,i)=>{
+    const card=document.createElement("div");card.className="card";
+    const tag=q.type==="open"?'<span class="qtag open">открытый · 10 б.</span>':'<span class="qtag">'+q.pts+' б.</span>';
+    let h=`<div class="qnum">Вопрос ${i+1} из ${Q.length}${tag}</div><div class="qtext">${q.text}</div>`;
+    if(q.type==="mc"){q.opts.forEach((o,j)=>h+=`<label class="opt" data-q="${i}" data-j="${j}"><input type="radio" name="q${i}" value="${j}"><span>${o}</span></label>`);}
+    else if(q.type==="num"){h+=`<input type="number" inputmode="decimal" step="any" id="in${i}" placeholder="Ваш ответ"><div class="hint">Можно с запятой или точкой; % не обязателен.</div>`;}
+    else{h+=`<div class="ask">${q.ask}</div><textarea id="in${i}" placeholder="Ваш ответ..."></textarea>`;}
+    card.innerHTML=h;box.appendChild(card);
+  });
+  box.querySelectorAll(".opt").forEach(el=>el.addEventListener("click",()=>{
+    const qi=+el.dataset.q,j=+el.dataset.j;answers[qi]=j;
+    box.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(x=>x.classList.remove("sel"));
+    el.classList.add("sel");el.querySelector("input").checked=true;updateProgress();
+  }));
+  Q.forEach((q,i)=>{if(q.type!=="mc"){const inp=$("in"+i);inp.addEventListener("input",()=>{answers[i]=inp.value.trim()===""?null:inp.value;updateProgress();});}});
+}
+function updateProgress(){const d=answers.filter(a=>a!==null).length;$("answered").textContent=`Отвечено ${d} / ${Q.length}`;$("barFill").style.width=(d/Q.length*100)+"%";}
+
+function tick(){
+  const left=TIME_LIMIT-Math.floor((Date.now()-started)/1000);
+  if(left<=0){$("timer").textContent="00:00";showResult(true);return;}
+  const m=Math.floor(left/60),s=left%60;$("timer").textContent=`${m}:${String(s).padStart(2,"0")}`;
+  $("timer").classList.toggle("low",left<=300);
+}
+
+function grade(){
+  let score=0;const detail=[];
+  Q.forEach((q,i)=>{
+    if(q.type==="open"){
+      const txt=answers[i]||"";const r=gradeOpen(q,txt);score+=r.sc;
+      detail.push({i,type:"open",pts:q.pts,got:r.sc,hits:r.hits,text:txt});
+    }else{
+      let ok=false,given="—";
+      if(q.type==="mc"){if(answers[i]!==null){given=q.opts[answers[i]];ok=answers[i]===q.correct;}}
+      else{if(answers[i]!==null){given=answers[i];ok=numOk(q,answers[i]);}}
+      if(ok)score+=q.pts;
+      detail.push({i,type:q.type,pts:q.pts,got:ok?q.pts:0,ok,given,corr:q.type==="mc"?q.opts[q.correct]:(q.display||q.answers[0]),why:q.why});
+    }
+  });
+  return {score,detail};
+}
+
+function sendResults(score,detail){
+  if(!SUBMIT_URL){$("savedNote").textContent="Покажите этот экран преподавателю (скриншот).";return;}
+  const payload=new URLSearchParams();
+  payload.set("first",student.first);payload.set("last",student.last);payload.set("grp",student.grp||"");
+  payload.set("score",score);payload.set("ts",new Date().toISOString());
+  payload.set("answers",JSON.stringify(detail.map(d=>({q:d.i+1,got:d.got,max:d.pts,ans:d.type==="open"?d.text:d.given}))));
+  fetch(SUBMIT_URL,{method:"POST",mode:"no-cors",body:payload}).then(()=>{$("savedNote").textContent="Результат отправлен преподавателю.";}).catch(()=>{$("savedNote").textContent="Результат не отправился — покажите скриншот преподавателю.";});
+}
+
+$("startBtn").addEventListener("click",()=>{
+  const f=$("fname").value.trim(),l=$("lname").value.trim();
+  if(!f||!l){$("startErr").textContent="Введите имя и фамилию, чтобы начать.";return;}
+  student={first:f,last:l,grp:$("grp").value.trim()};
+  buildQuiz();updateProgress();started=Date.now();tick();timerInt=setInterval(tick,1000);
+  $("start").classList.add("hide");$("quiz").classList.remove("hide");window.scrollTo(0,0);
+});
+
+let confirmFin=false;
+$("finishBtn").addEventListener("click",()=>{
+  const d=answers.filter(a=>a!==null).length;
+  if(d<Q.length && !confirmFin){$("finErr").textContent=`Отвечено ${d} из ${Q.length}. Нажмите ещё раз — неотвеченные пойдут как 0.`;$("finishBtn").textContent="Всё равно завершить";confirmFin=true;return;}
+  showResult(false);
+});
+
+function showResult(timeUp){
+  if(finished)return;finished=true;clearInterval(timerInt);
+  const {score,detail}=grade();
+  $("resWho").textContent=student.first+" "+student.last+(student.grp?(" · "+student.grp):"");
+  $("resScore").textContent=score;
+  let line=timeUp?"Время вышло. ":"";
+  line+= score>=90?"Отличный результат.":score>=75?"Хороший результат.":score>=50?"База есть, подтяните детали.":"Стоит пересмотреть лекции 9–10.";
+  $("resLine").textContent=line;
+  const rev=$("review");rev.innerHTML="";
+  detail.forEach(d=>{
+    const it=document.createElement("div");it.className="res-item";
+    if(d.type==="open"){
+      const full=d.got===d.pts,zero=d.got===0;
+      let crit=d.hits.map(h=>`<div class="crit"><span class="${h.hit?'y':'n'}">${h.hit?'✓':'✗'}</span> ${h.label} <span style="color:#9aa8a3">(${h.hit?h.pts:0}/${h.pts})</span></div>`).join("");
+      it.innerHTML=`<div class="res-q">Вопрос ${d.i+1} · открытый
+        <span class="tag ${full?'ok':zero?'bad':'part'}">${d.got} / ${d.pts}</span></div>
+        ${crit}
+        <div class="quote">${d.text?d.text.replace(/</g,"&lt;"):"— пусто —"}</div>`;
+    }else{
+      it.innerHTML=`<div class="res-q">Вопрос ${d.i+1}
+        <span class="tag ${d.ok?'ok':'bad'}">${d.ok?'✓ '+d.pts:'✗ 0'} б.</span></div>
+        <div class="res-ans">Ваш ответ: <b>${d.given}</b></div>
+        ${d.ok?'':`<div class="res-ans">Правильно: <b>${d.corr}</b></div>`}
+        <div class="res-ans" style="margin-top:4px">${d.why}</div>`;
+    }
+    rev.appendChild(it);
+  });
+  sendResults(score,detail);
+  $("quiz").classList.add("hide");$("result").classList.remove("hide");window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
